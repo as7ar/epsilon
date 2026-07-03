@@ -1,0 +1,14 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "res://../target/debug/libepsilon.so"
+linux.release.x86_64 =   "res://../target/release/libepsilon.so"
+windows.debug.x86_64 =   "res://../target/debug/epsilon.dll"
+windows.release.x86_64 = "res://../target/release/epsilon.dll"
+macos.debug = "res://../target/debug/libepsilon.dylib"
+macos.release = "res://../target/release/libepsilon.dylib"
+macos.debug.arm64 =      "res://../target/debug/epsilon.dylib"
+macos.release.arm64 =    "res://../target/release/epsilon.dylib"

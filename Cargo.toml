@@ -1,0 +1,11 @@
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+resolver = "3"
+
+members = ["epsilon-server", "epsilon-core","rust"]
+
+[workspace.dependencies]
+ron = "0.12.0"
