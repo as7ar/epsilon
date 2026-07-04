@@ -32,7 +32,7 @@ impl IControl for StartScene {
 
         if key.unwrap().is_pressed() {
             self.started=true;
-            self.base().get_tree().change_scene_to_file("res://scene/lobby_scene.tscn");
+            self.base().get_tree().change_scene_to_file("res://scene/lobby/lobby_scene.tscn");
         }
     }
 }

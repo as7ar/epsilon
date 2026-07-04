@@ -1,0 +1,32 @@
+[gd_scene format=4 uid="uid://bj15fqxt8o27m"]
+
+[ext_resource type="PackedScene" uid="uid://cl7wgpaepplmm" path="res://scene/player.tscn" id="1_v3l0q"]
+[ext_resource type="Texture2D" uid="uid://bjsk65hmjgjy8" path="res://assets/tiles/plane.png" id="2_m40cx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmnfx"]
+resource_name = "plane"
+texture = ExtResource("2_m40cx")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
+
+[sub_resource type="TileSet" id="TileSet_sn0t7"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_bmnfx")
+
+[node name="LobbyScene" type="LobbyScene" unique_id=346493355]
+
+[node name="Player" parent="." unique_id=1090261988 instance=ExtResource("1_v3l0q")]
+position = Vector2(78, 171)
+collision_layer = 1
+collision_mask = 1
+platform_floor_layers = 4294901761
+platform_wall_layers = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=869899772]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1758249391]
+rotation = -1.5707964
+tile_map_data = PackedByteArray("AADw//D/AQAAAAAAAFDx//D/AQAAAAAAAFDx//H/AQAAAAAAAFDw//H/AQAAAAAAAFDw//L/AQAAAAAAAFDw//P/AQAAAAAAAFDw//T/AQAAAAAAAFDw//X/AQAAAAAAAFDw//b/AQAAAAAAAFDw//f/AQAAAAAAAFDw//j/AQAAAAAAAFDw//n/AQAAAAAAAFDw//r/AQAAAAAAAFDw//v/AQAAAAAAAFDw//z/AQAAAAAAAFDw//3/AQAAAAAAAFDw//7/AQAAAAAAAFDw////AQAAAAAAAFDw/wAAAQAAAAAAAFDw/wEAAQAAAAAAAFDw/wIAAQAAAAAAAFDw/wMAAQAAAAAAAFDw/wQAAQAAAAAAAFDw/wUAAQAAAAAAAFDw/wYAAQAAAAAAAFDw/wcAAQAAAAAAAFDw/wgAAQAAAAAAAFDw/wkAAQAAAAAAAFDw/woAAQAAAAAAAFDw/wsAAQAAAAAAAFDw/wwAAQAAAAAAAFDw/w0AAQAAAAAAAFDw/w4AAQAAAAAAAFDw/w8AAQAAAAAAAFDw/xAAAQAAAAAAAFDw/xEAAQAAAAAAAFDw/xIAAQAAAAAAAFDw/xMAAQAAAAAAAFDx/xMAAQAAAAAAAFDy/xMAAQAAAAAAAFDz/xMAAQAAAAAAAFD0/xMAAQAAAAAAAFD1/xMAAQAAAAAAAFD0/xIAAQAAAAAAAFDz/xIAAQAAAAAAAFDz/xEAAQAAAAAAAFDy/xEAAQAAAAAAAFDy/xAAAQAAAAAAAFDy/w8AAQAAAAAAAFDx/w4AAQAAAAAAAFDx/w0AAQAAAAAAAFDx/wwAAQAAAAAAAFDx/wsAAQAAAAAAAFDx/woAAQAAAAAAAFDv/wAAAQAAAAAAAFDv////AQAAAAAAAFDv//7/AQAAAAAAAFDv//3/AQAAAAAAAFDv//z/AQAAAAAAAFDv//v/AQAAAAAAAFDv//r/AQAAAAAAAFDv//n/AQAAAAAAAFDv//j/AQAAAAAAAFDv//f/AQAAAAAAAFDv//b/AQAAAAAAAFDx//T/AQAAAAAAAFDx//P/AQAAAAAAAFDx//L/AQAAAAAAAFDx//X/AQAAAAAAAFDx//b/AQAAAAAAAFDx//f/AQAAAAAAAFDx//j/AQAAAAAAAFDx//n/AQAAAAAAAFDx//r/AQAAAAAAAFDx//v/AQAAAAAAAFDx//z/AQAAAAAAAFDx//3/AQAAAAAAAFDx//7/AQAAAAAAAFDx////AQAAAAAAAFDx/wAAAQAAAAAAAFDx/wEAAQAAAAAAAFDx/wIAAQAAAAAAAFDx/wMAAQAAAAAAAFDx/wQAAQAAAAAAAFDx/wUAAQAAAAAAAFDx/wYAAQAAAAAAAFDx/wcAAQAAAAAAAFDx/wgAAQAAAAAAAFDx/wkAAQAAAAAAAFDx/w8AAQAAAAAAAFDx/xAAAQAAAAAAAFDx/xEAAQAAAAAAAFDx/xIAAQAAAAAAAFDy/xIAAQAAAAAAAFA=")
+tile_set = SubResource("TileSet_sn0t7")
