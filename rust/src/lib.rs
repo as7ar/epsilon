@@ -1,3 +1,7 @@
+mod scene;
+mod player;
+mod data;
+
 use godot::prelude::*;
 
 struct Epsilon;

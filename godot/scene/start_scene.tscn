@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://basyo0xq4cdpj"]
+
+[node name="StartScene" type="StartScene" unique_id=322730150]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=92769569]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 51
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=270024583]
+layout_mode = 2
+text = "PRESS ANY KEY TO START"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=408256409]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -11.5
+offset_right = 36.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=67817322]
+layout_mode = 2
+text = "Project: e"
+horizontal_alignment = 1
