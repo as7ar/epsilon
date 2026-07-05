@@ -9,3 +9,4 @@ crate-type = ["cdylib"]
 [dependencies]
 godot = "0.5.4"
 mathrc.workspace = true
+epsilon-core = { path = "../epsilon-core" }
