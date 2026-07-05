@@ -1,7 +1,7 @@
 mod scene;
 mod player;
-mod data;
-mod utils;
+pub mod data;
+pub mod utils;
 
 use godot::prelude::*;
 
