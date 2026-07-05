@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d13d071jnmkt6" path="res://assets/player.png" id="1_xo3ru"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3h5oh"]
-size = Vector2(20, 37.5)
+size = Vector2(17, 38.75)
 
 [node name="Player" type="Player" unique_id=1090261988]
 scale = Vector2(2, 2)
@@ -17,8 +17,12 @@ texture = ExtResource("1_xo3ru")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=176935120]
 light_mask = 3
 visibility_layer = 3
-position = Vector2(0, 5.25)
+position = Vector2(0, 4.375)
 shape = SubResource("RectangleShape2D_3h5oh")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=625271605]
 position = Vector2(-2, 9.5)
+process_callback = 0
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 2.0

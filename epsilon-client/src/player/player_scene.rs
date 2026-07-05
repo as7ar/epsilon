@@ -6,6 +6,7 @@ use godot::prelude::{godot_api, GodotClass, Vector2};
 #[class(base=CharacterBody2D)]
 pub struct Player {
     base: Base<CharacterBody2D>,
+    can_double_jump: bool,
 }
 
 const SPEED: f32 = 300.0;
@@ -14,7 +15,10 @@ const JUMP_VELOCITY: f32 = -450.0;
 #[godot_api]
 impl ICharacterBody2D for Player {
     fn init(base: Base<Self::Base>) -> Self {
-        Self { base }
+        Self {
+            base,
+            can_double_jump: true
+        }
     }
 
     fn physics_process(&mut self, delta: f64) {
@@ -41,8 +45,13 @@ impl ICharacterBody2D for Player {
 
         velocity.x = direction * SPEED;
 
-        if input.is_action_just_pressed("jump") && self.base().is_on_floor() {
-            velocity.y = JUMP_VELOCITY;
+        if input.is_action_just_pressed("jump") {
+            match self.base().is_on_floor() {
+                false => if self.can_double_jump {
+                    velocity.y = JUMP_VELOCITY
+                }
+                true => velocity.y = JUMP_VELOCITY
+            }
         }
 
         self.base_mut().set_velocity(velocity);
