@@ -9,7 +9,7 @@ use epsilon_core::CoolDown;
 pub struct Player {
     base: Base<CharacterBody2D>,
 
-    player_face: i16,
+    player_face: i16, // 1: right, 0: left
 
     can_double_jump: bool,
 
@@ -22,7 +22,7 @@ pub struct Player {
 
 const SPEED: f32 = 300.0;
 const JUMP_VELOCITY: f32 = -450.0;
-const COYOTE_DURATION: f32 = 0.15;
+const COYOTE_DURATION: f32 = 0.25;
 
 #[godot_api]
 impl ICharacterBody2D for Player {
