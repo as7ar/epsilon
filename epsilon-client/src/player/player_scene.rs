@@ -1,14 +1,16 @@
+use crate::data::{get_user, PlayerStatus};
+use epsilon_core::{CoolDown, Player};
 use godot::classes::{AnimatedSprite2D, CharacterBody2D, ICharacterBody2D, Input, ProjectSettings};
 use godot::global::Key;
 use godot::obj::{Base, Singleton, WithBaseField};
-use godot::prelude::{godot_api, godot_print, GodotClass};
-use epsilon_core::CoolDown;
-use crate::data::PlayerStatus;
+use godot::prelude::{godot_api, GodotClass, Vector2};
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-pub struct Player {
+pub struct PlayerExt {
     base: Base<CharacterBody2D>,
+
+    player: Player,
 
     player_face: i16,
     player_status: PlayerStatus,
@@ -28,10 +30,14 @@ const COYOTE_DURATION: f32 = 0.25;
 const DASH_DURATION: f32 = 0.15;
 
 #[godot_api]
-impl ICharacterBody2D for Player {
+impl ICharacterBody2D for PlayerExt {
     fn init(base: Base<Self::Base>) -> Self {
+        let player = Player::new(get_user());
+
         Self {
             base,
+
+            player,
 
             player_face: 1,
             player_status: PlayerStatus::Standing,
@@ -53,7 +59,12 @@ impl ICharacterBody2D for Player {
             .get_setting("physics/2d/default_gravity")
             .to::<f32>();
 
+        let x = self.base().get_position().x;
+        let y = self.base().get_position().y;
+
         self.dash_cool.tick();
+
+        // ================================[ Movements ]================================
 
         if self.player_status == PlayerStatus::Dash {
             self.dash_time -= delta as f32;
@@ -117,6 +128,8 @@ impl ICharacterBody2D for Player {
         self.base_mut().set_velocity(velocity);
         self.base_mut().move_and_slide();
 
+        // ================================[ Animation ]================================
+
         let mut sprite = self.base().get_node_as::<AnimatedSprite2D>("AnimatedSprite2D");
 
         sprite.set_flip_h(self.player_face == 0);
@@ -135,5 +148,17 @@ impl ICharacterBody2D for Player {
         if sprite.get_animation().to_string() != anim {
             sprite.play_ex().name(anim).done();
         }
+
+        // ================================[ Falling Death ]================================
+
+        if y >= 1200. {
+            self.base_mut().set_position(Vector2 {
+                x: 0.,
+                y: -50.
+            } )
+        }
+
+        // ================================[Debug]================================
+        // godot_print!("x: {x}, y: {y}");
     }
 }

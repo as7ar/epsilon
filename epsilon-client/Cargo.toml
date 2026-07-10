@@ -10,3 +10,6 @@ crate-type = ["cdylib"]
 godot = "0.5.4"
 mathrc.workspace = true
 epsilon-core = { path = "../epsilon-core" }
+directories.workspace = true
+ron.workspace = true
+uuid.workspace = true
