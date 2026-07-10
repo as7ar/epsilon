@@ -1,2 +1,5 @@
-mod player_scene;
-mod player_system;
+pub mod player_scene;
+pub mod player_system;
+
+pub use player_scene::*;
+pub use player_system::*;

@@ -11,6 +11,7 @@ impl Player {
         Self {
             user,
             state: State {
+                max_hlt: 3,
                 hlt: 3,
                 atk: 1.,
                 spd: 300.

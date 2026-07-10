@@ -1,23 +1,24 @@
 use crate::data::{get_user, PlayerStatus};
-use epsilon_core::{CoolDown, Player};
-use godot::classes::{AnimatedSprite2D, CharacterBody2D, ICharacterBody2D, Input, ProjectSettings};
+use epsilon_core::{CoolDown, IPlayer, IState, Player};
+use godot::classes::{AnimatedSprite2D, CharacterBody2D, Engine, ICharacterBody2D, Input, ProjectSettings, SceneTree};
 use godot::global::Key;
-use godot::obj::{Base, Singleton, WithBaseField};
+use godot::obj::{Base, Singleton, WithBaseField, WithUserSignals};
 use godot::prelude::{godot_api, GodotClass, Vector2};
+use crate::game_manager::GameManager;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 pub struct PlayerExt {
     base: Base<CharacterBody2D>,
 
-    player: Player,
+    pub player: Player,
 
     player_face: i16,
     player_status: PlayerStatus,
 
-    can_double_jump: bool,
+    pub can_double_jump: bool,
 
-    pub(crate) dash_cool: CoolDown,
+    pub dash_cool: CoolDown,
     dash_time: f32,
 
     coyote_time: f32,
@@ -47,6 +48,10 @@ impl ICharacterBody2D for PlayerExt {
 
             coyote_time: 0.0,
         }
+    }
+
+    fn ready(&mut self) {
+        self.base_mut().add_to_group("player");
     }
 
     fn physics_process(&mut self, delta: f64) {
@@ -156,10 +161,38 @@ impl ICharacterBody2D for PlayerExt {
             self.base_mut().set_position(Vector2 {
                 x: 0.,
                 y: -50.
-            } )
+            } );
+            self.damage(1);
         }
 
         // ================================[Debug]================================
         // godot_print!("x: {x}, y: {y}");
+    }
+}
+
+#[godot_api]
+impl PlayerExt {
+    #[signal]
+    pub fn damage_taken(amount: i16);
+
+    #[signal]
+    fn health_changed(health: i16);
+}
+
+impl IPlayer for PlayerExt {
+    fn respawn(&mut self) {
+        self.base_mut().set_position(Vector2 {
+            x: 0., y: -50.
+        });
+        self.set_health(self.get_max_health())
+    }
+
+    fn game_over(&mut self) {
+        self.respawn()
+    }
+
+    fn damage(&mut self, damage: i16) {
+        self.signals().damage_taken().emit(1);
+        self.add_health(-damage)
     }
 }
