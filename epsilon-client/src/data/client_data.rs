@@ -1,6 +1,7 @@
 use directories::ProjectDirs;
 use epsilon_core::User;
 use std::fs;
+use std::fs::File;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 use uuid::Uuid;
@@ -16,6 +17,11 @@ pub fn get_user() -> User {
     let client = path.join("client.ron");
     let user: User;
     if !client.exists() {
+        if let Some(parent) = client.parent() {
+            fs::create_dir_all(parent).expect("panic: cant create folder");
+        }
+        File::create(&client).expect("panic: cant create client.ron");
+
         let uuid = Uuid::new_v4();
         let timestamp = SystemTime::now()
             .duration_since(UNIX_EPOCH).expect("Time went backwards")
@@ -29,9 +35,9 @@ pub fn get_user() -> User {
 
         let ron = ron::to_string(&user).unwrap();
 
-        fs::write(&path, ron).unwrap();
+        fs::write(&client, ron).unwrap();
     } else {
-        let text = fs::read_to_string(&path).unwrap();
+        let text = fs::read_to_string(&client).unwrap();
         user = ron::from_str(&text).unwrap()
     }
 
