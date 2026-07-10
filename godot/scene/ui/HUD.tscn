@@ -2,7 +2,7 @@
 
 [node name="Hud" type="CanvasLayer" unique_id=223172446]
 
-[node name="Control" type="Control" parent="." unique_id=379154277]
+[node name="Control" type="Control" parent="." unique_id=1846016835]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,11 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InfoLabel" type="InfoLabel" parent="Control" unique_id=2099664303]
+[node name="HealthBar" type="HealthBar" parent="Control" unique_id=327568320]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 41.33
-grow_vertical = 0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2

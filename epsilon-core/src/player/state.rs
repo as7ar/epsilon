@@ -1,7 +1,7 @@
 pub struct State {
     pub hlt: i16,
     pub atk: f64,
-    pub spd: f64,
+    pub spd: f32,
 }
 
 pub trait IState {

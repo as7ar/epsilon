@@ -2,8 +2,8 @@ use crate::State;
 use crate::User;
 
 pub struct Player {
-    user: User,
-    state: State
+    pub user: User,
+    pub state: State
 }
 
 impl Player {

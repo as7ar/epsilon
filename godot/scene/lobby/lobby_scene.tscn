@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cl7wgpaepplmm" path="res://scene/player.tscn" id="1_v3l0q"]
 [ext_resource type="Texture2D" uid="uid://bjsk65hmjgjy8" path="res://assets/tiles/plane.png" id="2_m40cx"]
 [ext_resource type="PackedScene" uid="uid://c60l1rc06lusi" path="res://scene/ui/HUD.tscn" id="3_m40cx"]
+[ext_resource type="PackedScene" uid="uid://bgx5lf3ous7lr" path="res://scene/ui/info.tscn" id="4_bmnfx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmnfx"]
 resource_name = "plane"
@@ -28,3 +29,5 @@ tile_map_data = PackedByteArray("AAD7/+7/AQAAAAAAAAD7/+//AQAAAAAAAAD7//D/AQAAAAA
 tile_set = SubResource("TileSet_sn0t7")
 
 [node name="Hud" parent="." unique_id=223172446 instance=ExtResource("3_m40cx")]
+
+[node name="Info" parent="." unique_id=1553749591 instance=ExtResource("4_bmnfx")]

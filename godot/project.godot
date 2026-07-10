@@ -15,10 +15,18 @@ run/main_scene="uid://basyo0xq4cdpj"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManagerGlobal="*uid://dnqtlekcqarrv"
+
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[global_group]
+
+game_manager=""
 
 [input]
 

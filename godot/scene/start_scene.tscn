@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://basyo0xq4cdpj"]
 
-[ext_resource type="PackedScene" uid="uid://c60l1rc06lusi" path="res://scene/ui/HUD.tscn" id="1_24qbo"]
+[ext_resource type="PackedScene" uid="uid://bgx5lf3ous7lr" path="res://scene/ui/info.tscn" id="1_24qbo"]
 
 [node name="StartScene" type="StartScene" unique_id=322730150]
 anchors_preset = 15
@@ -43,4 +43,4 @@ layout_mode = 2
 text = "Project: e"
 horizontal_alignment = 1
 
-[node name="Hud" parent="." unique_id=223172446 instance=ExtResource("1_24qbo")]
+[node name="Info" parent="." unique_id=1553749591 instance=ExtResource("1_24qbo")]

@@ -23,8 +23,6 @@ pub struct PlayerExt {
     coyote_time: f32,
 }
 
-const SPEED: f32 = 300.0;
-const DASH_SPEED: f32 = SPEED * 5.5;
 const JUMP_VELOCITY: f32 = -450.0;
 const COYOTE_DURATION: f32 = 0.25;
 const DASH_DURATION: f32 = 0.15;
@@ -52,6 +50,9 @@ impl ICharacterBody2D for PlayerExt {
     }
 
     fn physics_process(&mut self, delta: f64) {
+        let speed: f32 = self.player.state.spd;
+        let dash_speed: f32 = speed * 5.5;
+
         let input = Input::singleton();
         let mut velocity = self.base().get_velocity();
 
@@ -70,7 +71,7 @@ impl ICharacterBody2D for PlayerExt {
             self.dash_time -= delta as f32;
 
             let dir = if self.player_face == 0 { -1.0 } else { 1.0 };
-            velocity.x = DASH_SPEED * dir;
+            velocity.x = dash_speed * dir;
 
             if self.dash_time <= 0.0 {
                 self.player_status = PlayerStatus::Standing;
@@ -88,7 +89,7 @@ impl ICharacterBody2D for PlayerExt {
                 self.player_face = 1;
             }
 
-            velocity.x = direction * SPEED;
+            velocity.x = direction * speed;
 
             if input.is_key_pressed(Key::K) && self.dash_cool.try_use() {
                 self.player_status = PlayerStatus::Dash;

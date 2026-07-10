@@ -20,8 +20,8 @@ impl ILabel for InfoLabel {
     fn ready(&mut self) {
         let user = get_user();
         let uuid = user.id.to_string();
-        // let version = env!("CARGO_PKG_VERSION");
+        let version = env!("CARGO_PKG_VERSION");
 
-        self.base_mut().set_text(&format!("uuid: {uuid}"))
+        self.base_mut().set_text(&format!("uuid: {uuid}      ver{version}"))
     }
 }
