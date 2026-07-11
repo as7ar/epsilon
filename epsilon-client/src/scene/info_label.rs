@@ -1,5 +1,5 @@
-use godot::classes::{ILabel, Label};
 use crate::data::get_user;
+use godot::classes::{ILabel, Label};
 use godot::obj::{Base, WithBaseField};
 use godot::prelude::{godot_api, GodotClass};
 

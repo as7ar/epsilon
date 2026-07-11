@@ -1,6 +1,7 @@
 use crate::State;
 use crate::User;
 
+#[derive(Clone)]
 pub struct Player {
     pub user: User,
     pub state: State
@@ -11,7 +12,7 @@ impl Player {
         Self {
             user,
             state: State {
-                max_hlt: 3,
+                max_hlt: 5,
                 hlt: 3,
                 atk: 1.,
                 spd: 300.

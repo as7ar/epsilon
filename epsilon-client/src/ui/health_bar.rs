@@ -1,25 +1,23 @@
-use crate::game_manager::GameManager;
+use crate::player::PlayerExt;
 use godot::classes::{Engine, HBoxContainer, IHBoxContainer, ResourceLoader, TextureRect};
 use godot::global::godot_print;
 use godot::obj::{Base, Singleton, WithBaseField, WithUserSignals};
 use godot::prelude::{godot_api, GodotClass, PackedScene, SceneTree, ToGodot, Vector2};
-use crate::player::PlayerExt;
 
 #[derive(GodotClass)]
 #[class(base=HBoxContainer)]
 struct HealthBar {
-    base: Base<HBoxContainer>
+    base: Base<HBoxContainer>,
+
+    pub(crate) max_health: i16,
 }
 
 #[godot_api]
 impl IHBoxContainer for HealthBar {
     fn init(base: Base<Self::Base>) -> Self {
-        /*let engine = &Engine::singleton()
-            .get_singleton("GameManager")
-            .unwrap().cast::<GameManager>().bind().player;*/
-
         Self {
-            base
+            base,
+            max_health: 0,
         }
     }
 
@@ -29,25 +27,32 @@ impl IHBoxContainer for HealthBar {
             .unwrap()
             .cast::<SceneTree>();
 
-        let manager = tree
-            .get_first_node_in_group("game_manager")
-            .unwrap()
-            .cast::<GameManager>();
-
         let player_ext = tree
             .get_first_node_in_group("player")
             .unwrap()
             .cast::<PlayerExt>();
+        let player = &player_ext.bind().player;
+        let mut health = player.state.hlt;
+        self.max_health = player.state.max_hlt;
 
         let mut this = self.base().to_godot_owned();
         player_ext.signals()
             .damage_taken()
             .connect_self(move |_, amount| {
-                this.call("update_health", &[amount.to_variant()]);
+                godot_print!("now hlt: {}", health.clone());
+                health -= amount;
+
+                this.call("update_health", &[health.to_variant()]);
             });
 
-        let player = &manager.bind().player;
-        let health = player.state.hlt;
+        let mut this = self.base().to_godot_owned();
+        player_ext.signals()
+            .health_changed()
+            .connect_self(move |_, changed| {
+                health = changed;
+
+                this.call("update_health", &[changed.to_variant()]);
+            });
 
         self.create_health_bar(health);
     }
@@ -57,25 +62,39 @@ impl IHBoxContainer for HealthBar {
 impl HealthBar {
     #[func]
     fn create_health_bar(&mut self, health: i16) {
-        let scene = ResourceLoader::singleton()
+        let loader = ResourceLoader::singleton();
+
+        let heart = loader.clone()
             .load("res://scene/ui/heart.tscn")
             .unwrap()
             .cast::<PackedScene>();
+        let empty_heart = loader.clone()
+            .load("res://scene/ui/empty_heart.tscn")
+            .unwrap()
+            .cast::<PackedScene>();
 
-        for _ in 1..=health {
-            let mut heart = scene.instantiate().unwrap().cast::<TextureRect>();
-            heart.set_custom_minimum_size(Vector2 {
-                x: 32., y: 32.
-            });
+        let max_health = self.max_health;
 
+        for i in 0..max_health {
+            let mut heart = if i < health {
+                heart.instantiate().unwrap().cast::<TextureRect>()
+            } else {
+                empty_heart.instantiate().unwrap().cast::<TextureRect>()
+            };
+
+            heart.set_custom_minimum_size(Vector2::new(32.0, 32.0));
             self.base_mut().add_child(&heart);
         }
     }
 
     #[func]
-    fn update_health(&mut self, health: i16) { // 호출 안 됨
-        godot_print!("{health}");
-        self.base_mut().get_children().clear();
+    fn update_health(&mut self, health: i16) {
+        let children = self.base_mut().get_children();
+        for mut child in children.iter_shared() {
+            child.queue_free();
+        }
+
+        godot_print!("{}", health);
         self.create_health_bar(health);
     }
 }

@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct State {
     pub max_hlt: i16,
     pub hlt: i16,

@@ -1,7 +1,6 @@
 use crate::player::player_scene::PlayerExt;
 use epsilon_core::IState;
 
-
 impl IState for PlayerExt {
     fn get_max_health(&self) -> i16 {
         self.player.state.max_hlt
@@ -20,7 +19,7 @@ impl IState for PlayerExt {
     }
 
     fn add_health(&mut self, added_health: i16) {
-        self.player.state.hlt+=added_health
+        self.player.state.hlt += added_health;
     }
 
     fn get_attack(&self) -> f64 {

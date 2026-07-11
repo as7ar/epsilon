@@ -1,6 +1,8 @@
 use crate::data;
 use crate::data::get_user;
-use epsilon_core::Player;
+use crate::player::PlayerExt;
+use epsilon_core::{Player, User};
+use godot::classes::Engine;
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -8,7 +10,7 @@ use godot::prelude::*;
 pub struct GameManager {
     base: Base<Node>,
 
-    pub player: Player
+    pub user: User
 }
 
 #[godot_api]
@@ -16,12 +18,11 @@ impl INode for GameManager {
     fn init(base: Base<Self::Base>) -> Self {
         data::init();
         let user = get_user();
-        let player = Player::new(user.clone());
 
         Self {
             base,
 
-            player
+            user
         }
     }
 
@@ -31,8 +32,15 @@ impl INode for GameManager {
     }
 }
 
-#[godot_api]
 impl GameManager {
-    #[func]
-    fn get_player() {}
+    pub fn get_player(&self) -> Option<Player>  {
+        let tree = Engine::singleton()
+            .get_main_loop()
+            .unwrap()
+            .cast::<SceneTree>();
+        let player_node = tree.get_first_node_in_group("player")?;
+        let player_ext = player_node.try_cast::<PlayerExt>();
+
+        Some(player_ext.unwrap().bind().player.clone())
+    }
 }

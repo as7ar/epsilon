@@ -1,10 +1,9 @@
 use crate::data::{get_user, PlayerStatus};
 use epsilon_core::{CoolDown, IPlayer, IState, Player};
-use godot::classes::{AnimatedSprite2D, CharacterBody2D, Engine, ICharacterBody2D, Input, ProjectSettings, SceneTree};
-use godot::global::Key;
+use godot::classes::{AnimatedSprite2D, CharacterBody2D, ICharacterBody2D, Input, ProjectSettings};
+use godot::global::{godot_print, Key};
 use godot::obj::{Base, Singleton, WithBaseField, WithUserSignals};
 use godot::prelude::{godot_api, GodotClass, Vector2};
-use crate::game_manager::GameManager;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
@@ -52,6 +51,9 @@ impl ICharacterBody2D for PlayerExt {
 
     fn ready(&mut self) {
         self.base_mut().add_to_group("player");
+
+        let max = self.get_max_health();
+        self.signals().health_changed().emit(max);
     }
 
     fn physics_process(&mut self, delta: f64) {
@@ -166,6 +168,9 @@ impl ICharacterBody2D for PlayerExt {
         }
 
         // ================================[Debug]================================
+        if input.is_key_pressed(Key::KEY_1) {
+            godot_print!("{}", self.get_health());
+        }
         // godot_print!("x: {x}, y: {y}");
     }
 }
@@ -176,7 +181,7 @@ impl PlayerExt {
     pub fn damage_taken(amount: i16);
 
     #[signal]
-    fn health_changed(health: i16);
+    pub fn health_changed(changed: i16);
 }
 
 impl IPlayer for PlayerExt {
@@ -184,7 +189,10 @@ impl IPlayer for PlayerExt {
         self.base_mut().set_position(Vector2 {
             x: 0., y: -50.
         });
-        self.set_health(self.get_max_health())
+        self.set_health(self.get_max_health());
+
+        let max_health = self.get_max_health();
+        self.signals().health_changed().emit(max_health);
     }
 
     fn game_over(&mut self) {
@@ -192,7 +200,12 @@ impl IPlayer for PlayerExt {
     }
 
     fn damage(&mut self, damage: i16) {
+        if self.get_health() - damage <= 0 {
+            self.respawn();
+            return;
+        }
+
+        self.add_health(-damage);
         self.signals().damage_taken().emit(1);
-        self.add_health(-damage)
     }
 }
