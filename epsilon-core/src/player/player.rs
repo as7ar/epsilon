@@ -13,7 +13,7 @@ impl Player {
             user,
             state: State {
                 max_hlt: 5,
-                hlt: 3,
+                hlt: 1,
                 atk: 1.,
                 spd: 300.
             }

@@ -32,18 +32,9 @@ impl IHBoxContainer for HealthBar {
             .unwrap()
             .cast::<PlayerExt>();
         let player = &player_ext.bind().player;
+
         let mut health = player.state.hlt;
         self.max_health = player.state.max_hlt;
-
-        let mut this = self.base().to_godot_owned();
-        player_ext.signals()
-            .damage_taken()
-            .connect_self(move |_, amount| {
-                godot_print!("now hlt: {}", health.clone());
-                health -= amount;
-
-                this.call("update_health", &[health.to_variant()]);
-            });
 
         let mut this = self.base().to_godot_owned();
         player_ext.signals()
@@ -51,7 +42,9 @@ impl IHBoxContainer for HealthBar {
             .connect_self(move |_, changed| {
                 health = changed;
 
-                this.call("update_health", &[changed.to_variant()]);
+                // godot_print!("{}", health);
+
+                this.call("update_health", &[health.to_variant()]);
             });
 
         self.create_health_bar(health);
@@ -94,7 +87,7 @@ impl HealthBar {
             child.queue_free();
         }
 
-        godot_print!("{}", health);
+        // godot_print!("{}", health);
         self.create_health_bar(health);
     }
 }

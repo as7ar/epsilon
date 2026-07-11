@@ -206,6 +206,7 @@ impl IPlayer for PlayerExt {
         }
 
         self.add_health(-damage);
-        self.signals().damage_taken().emit(1);
+        let health = self.get_health();
+        self.signals().health_changed().emit(health);
     }
 }
