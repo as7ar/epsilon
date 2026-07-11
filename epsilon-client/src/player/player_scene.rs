@@ -178,9 +178,6 @@ impl ICharacterBody2D for PlayerExt {
 #[godot_api]
 impl PlayerExt {
     #[signal]
-    pub fn damage_taken(amount: i16);
-
-    #[signal]
     pub fn health_changed(changed: i16);
 }
 

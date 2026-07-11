@@ -1,6 +1,5 @@
 use crate::player::PlayerExt;
 use godot::classes::{Engine, HBoxContainer, IHBoxContainer, ResourceLoader, TextureRect};
-use godot::global::godot_print;
 use godot::obj::{Base, Singleton, WithBaseField, WithUserSignals};
 use godot::prelude::{godot_api, GodotClass, PackedScene, SceneTree, ToGodot, Vector2};
 
