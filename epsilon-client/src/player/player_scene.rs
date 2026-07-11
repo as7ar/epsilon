@@ -168,9 +168,9 @@ impl ICharacterBody2D for PlayerExt {
         }
 
         // ================================[Debug]================================
-        if input.is_key_pressed(Key::KEY_1) {
+        /*if input.is_key_pressed(Key::KEY_1) {
             godot_print!("{}", self.get_health());
-        }
+        }*/
         // godot_print!("x: {x}, y: {y}");
     }
 }
