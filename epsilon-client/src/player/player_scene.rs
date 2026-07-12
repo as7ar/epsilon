@@ -1,6 +1,6 @@
 use crate::data::{get_user, PlayerStatus};
 use epsilon_core::{CoolDown, IPlayer, IState, Player};
-use godot::classes::{AnimatedSprite2D, CharacterBody2D, ICharacterBody2D, Input, ProjectSettings};
+use godot::classes::{AnimatedSprite2D, CharacterBody2D, Engine, ICharacterBody2D, Input, ProjectSettings, SceneTree};
 use godot::global::{godot_print, Key};
 use godot::obj::{Base, Singleton, WithBaseField, WithUserSignals};
 use godot::prelude::{godot_api, GodotClass, Vector2};
@@ -205,5 +205,12 @@ impl IPlayer for PlayerExt {
         self.add_health(-damage);
         let health = self.get_health();
         self.signals().health_changed().emit(health);
+    }
+
+    fn give(&mut self, item: i16) {
+        self.player.inventory.add(item)
+    }
+    fn remove_item(&mut self, item: i16) {
+        self.player.inventory.remove(item);
     }
 }

@@ -12,6 +12,7 @@ struct Epsilon;
 #[gdextension]
 unsafe impl ExtensionLibrary for Epsilon {
     fn on_stage_init(stage: InitStage) {
-
+        if stage==InitStage::Core {
+        }
     }
 }

@@ -29,6 +29,7 @@ window/stretch/aspect="expand"
 
 game_manager=""
 player=""
+inventory_ui=""
 
 [input]
 
